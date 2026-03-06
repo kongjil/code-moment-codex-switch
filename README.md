@@ -6,13 +6,28 @@
 
 ## 中文
 
-`code-moment-codex-switch` 是一个 OpenClaw skill，用来在“代码时刻”自动把任务升级到 Codex 工作台。
+一个用于 OpenClaw 的技能（skill），用于在任务进入“代码时刻”后，自动把执行升级到更适合工程工作的 Codex 工作台。
 
-### 作用
+### 这是什么
 
-当任务已经不再是普通聊天，而是进入明显的工程实现阶段时，这个 skill 会把任务切到更适合编码工作的模型与流程。
+这个仓库提供一个面向 OpenClaw 的 `SKILL.md`，目标是把以下两类任务区分开：
 
-### 典型触发场景
+- **普通聊天 / 普通排查**：继续留在默认对话模型
+- **重代码 / 工程实现任务**：自动切到 Codex 工作台
+
+它的重点不是“所有任务都强制切模型”，而是只在任务跨过工程阈值时，才进入专门的编码流程。
+
+### 适合解决什么问题
+
+适合这种场景：
+
+- 平时主要用通用模型聊天、排障、查配置
+- 但一旦进入多文件改动、构建验证、持续修补的任务，就希望自动切到代码模型
+- 希望把“日常对话”和“工程执行”分流，减少主会话被纯编码流程拖住
+
+### 强触发信号
+
+以下情况默认应升级到 Codex：
 
 - 多文件代码修改
 - 需要 `build` / `test` / `lint` / 重启前验证
@@ -20,48 +35,69 @@
 - 需要“改代码 → 构建/测试 → 看结果 → 再修补”的迭代任务
 - Dockerfile、docker-compose、nginx、caddy、systemd、CI、构建失败排查
 
-### 主要行为
+### 工作方式
 
-- 日常普通对话仍留在默认模型
-- 编码型重任务自动切到 Codex 工作台
-- 遇到 deploy / restart / delete / 鉴权 / 路由改动时，仍保留确认闸门
+这个 skill 的目标是让 OpenClaw 在识别到重代码任务时：
 
-### 文件
+- 默认进入 Codex 工作台
+- 保留分阶段流程（Plan / Patch / Verify / Deploy / Closeout）
+- 在 deploy / restart / delete / 鉴权 / 路由修改这类高风险动作前继续要求确认
 
-- `SKILL.md`：skill 主定义文件
+### 仓库内容
 
-### 适用目标
+- `SKILL.md`：技能定义文件
+- `README.md`：仓库说明文件
 
-适合希望把“普通聊天”和“工程编码”分流处理的 OpenClaw 使用场景。
+### 适用对象
+
+适合希望把 OpenClaw 用成“聊天助手 + 工程工作台”双模式的人。
 
 ---
 
 ## English
 
-`code-moment-codex-switch` is an OpenClaw skill that upgrades coding-heavy tasks into a Codex workbench flow.
+An OpenClaw skill that upgrades “code moment” tasks into a Codex-oriented workbench flow.
 
-### What it does
+### What this is
 
-When a task moves beyond normal chat and becomes a real engineering task, this skill switches execution to a more coding-focused model and workflow.
+This repository provides a `SKILL.md` for OpenClaw. Its purpose is to separate two kinds of work:
 
-### Typical trigger cases
+- **normal chat / light investigation**: stay on the default chat model
+- **heavier engineering execution**: switch to a Codex workbench by default
+
+The goal is not to force every task onto another model, but to switch only when the task crosses the engineering threshold.
+
+### What problem it solves
+
+This is useful when:
+
+- you want a general model for normal chat, troubleshooting, and config work
+- but you want coding-heavy work to move to a dedicated code model automatically
+- you want to separate daily conversation from deeper engineering execution
+
+### Strong trigger signals
+
+The following cases should default to Codex:
 
 - multi-file code changes
-- tasks that require `build` / `test` / `lint` / pre-restart verification
+- tasks requiring `build` / `test` / `lint` / pre-restart verification
 - linked frontend/backend changes across state machines, routing, components, APIs, or configs
-- iterative loops such as: modify code → build/test → inspect result → patch again
-- Dockerfile, docker-compose, nginx, caddy, systemd, CI, build-failure debugging
+- iterative loops like: modify code → build/test → inspect result → patch again
+- Dockerfile, docker-compose, nginx, caddy, systemd, CI, and build-failure debugging
 
-### Main behavior
+### How it works
 
-- normal chat remains on the default model
-- coding-heavy tasks are upgraded to the Codex workbench
-- deploy / restart / delete / auth / routing changes still keep confirmation gates
+This skill is designed so that OpenClaw can:
 
-### Files
+- move coding-heavy tasks into a Codex workbench
+- preserve a phased workflow (Plan / Patch / Verify / Deploy / Closeout)
+- keep confirmation gates for deploy / restart / delete / auth / routing changes
 
-- `SKILL.md`: the main skill definition
+### Repository contents
 
-### Intended use
+- `SKILL.md`: the skill definition
+- `README.md`: repository documentation
 
-Best for OpenClaw setups that want to separate general chat work from heavier engineering execution.
+### Intended audience
+
+Useful for people who want OpenClaw to behave as both a chat assistant and an engineering workbench.
