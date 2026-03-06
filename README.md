@@ -56,7 +56,7 @@
 
 ## English
 
-An OpenClaw skill that upgrades “code moment” tasks into a Codex-oriented engineering workbench flow.
+An OpenClaw skill that upgrades coding-heavy tasks into a Codex-oriented engineering workbench flow.
 
 ### What this is
 
