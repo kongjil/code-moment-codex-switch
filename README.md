@@ -1,6 +1,6 @@
 # code-moment-codex-switch
 
-[中文](#中文) | [English](#english)
+[中文](#中文) | [ENGLISH](#english)
 
 ---
 
@@ -56,7 +56,7 @@
 
 ## English
 
-An OpenClaw skill that upgrades “code moment” tasks into a Codex-oriented workbench flow.
+An OpenClaw skill that upgrades “code moment” tasks into a Codex-oriented engineering workbench flow.
 
 ### What this is
 
@@ -100,4 +100,4 @@ This skill is designed so that OpenClaw can:
 
 ### Intended audience
 
-Useful for people who want OpenClaw to behave as both a chat assistant and an engineering workbench.
+Useful for people who want OpenClaw to work as both a chat assistant and an engineering workbench.
